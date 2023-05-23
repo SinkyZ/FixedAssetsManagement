@@ -1,0 +1,114 @@
+<!-- =====================================ADD BUILDING BUTTON=============================== -->
+
+<div class="add-button-container">
+    <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help"
+      [style]="{width: '150px', height: '40px'}" pButton pRipple label="Add Room" icon="pi pi-plus"></button>
+  </div>
+  
+  <!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
+  <div id="ua" style="display: flex; flex-direction: column; width: 100%">
+    <div id="b">
+      <div class="card">
+        <div *ngIf="roomList | async; let room">
+          <p-dataView #dv [value]="room" [paginator]="true" [rows]="3" filterBy="name" layout="list">
+            <ng-template pTemplate="header">
+              <div class="flex flex-column md:flex-row md:justify-content-between">
+                <span class="p-input-icon-left mb-2 md:mb-0">
+                  <input type="search" pInputText placeholder="Search by Name"
+                    (input)="dv.filter(getEventValue($event))" />
+                </span>
+              </div>
+            </ng-template>
+            <ng-template let-room pTemplate="listItem">
+              <div class="col-12">
+                <div class="container">
+                  <div class="row">
+                    <div class>
+                      <div>
+                        <i class="pi pi-book" style="font-size: 6rem"></i>
+                      </div>
+                      <div style>
+                        <div><b>Name: </b>{{ room.number }}</div>
+                        <div class="col">
+                          <div id="hover" div class="pi pi-pencil"
+                            style="font-size: 1,5rem; cursor: pointer; margin-left: 50px"
+                            (click)="showEditDialog(room)"></div>
+                          <div id="hover" div class="pi pi-trash"
+                            style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
+                            (click)="showDeleteDialog(room)"></div>
+                          <div id="hover" div title="Display Building" class="card-button pi pi-bars"
+                            style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
+                            routerLink="buildingDetails/{{ this.room.id }}"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- =============================MODAL FOR ADDING A COMPANY================================= -->
+  
+  <p-dialog header="Add Room" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}"
+    [draggable]="false" [resizable]="false">
+    <form [formGroup]="addRoomForm">
+      <label for="float-input">Name</label>
+      <br />
+      <input placeholder="Room's Number" id="float-input" type="text" pInputText formControlName="numberControl"
+        [style]="{width: '100%'}" />
+      <br />
+    </form>
+    <div class="buttons-container">
+      <button pButton pRipple type="submit" label="Close" (click)="hideAddDialog()"
+        class="modal-button btn-pos p-button-danger"></button>
+  
+      <button pButton pRipple type="submit" label="Submit" (click)="addRoom()" [disabled]="!addRoomForm.valid"
+        class="modal-button btn-pos p-button-success"></button>
+    </div>
+  </p-dialog>
+  
+  <!-- =============================MODAL FOR EDITING A BUILDING================================= -->
+  
+  <p-dialog header="Edit Building" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
+      [draggable]="false" [resizable]="false">
+      <form [formGroup]="editRoomForm">
+          <label for="float-input">Number</label>
+          <br />
+          <input placeholder="numberControl" id="float-input" type="text" pInputText formControlName="numberControl"
+              [style]="{width: '100%'}" />
+          <br />
+      </form>
+      <div class="buttons-container">
+          <button pButton pRipple type="button" label="Close" (click)="hideEditDialog()"
+              class="modal-button btn-pos p-button-danger"></button>
+          <button pButton pRipple type="submit" label="Submit" (click)="updateRoom()"
+              [disabled]="!editRoomForm.valid" class="modal-button btn-pos p-button-success"></button>
+      </div>
+  </p-dialog>
+  
+  <!---------------------- DELETE MODAL ------------------------>
+  <p-dialog [(visible)]="displayDeleteModal" styleClass="asset-dialog" [modal]="true">
+    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+        <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
+        <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+        <p style="margin-top: 10px; text-align: center">
+            Do you realy want to delete this building? This process cannot be undone.
+        </p>
+        <div style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-top: 40px;
+        ">
+            <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
+            <button pButton type="button" label="Delete" class="p-button-success"
+                (click)="deleteRoom(roomIdToDelete)"></button>
+        </div>
+    </div>
+  </p-dialog>
+  

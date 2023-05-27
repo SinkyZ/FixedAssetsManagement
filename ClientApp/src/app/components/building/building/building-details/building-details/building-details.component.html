@@ -1,11 +1,11 @@
-<!-- =====================================ADD BUILDING BUTTON=============================== -->
+<!-- =====================================ADD ROOM BUTTON=============================== -->
 
 <div class="add-button-container">
     <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help"
       [style]="{width: '150px', height: '40px'}" pButton pRipple label="Add Room" icon="pi pi-plus"></button>
   </div>
   
-  <!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
+  <!-- ===========================DATAVIEW WITH ROOMS====================== -->
   <div id="ua" style="display: flex; flex-direction: column; width: 100%">
     <div id="b">
       <div class="card">
@@ -28,7 +28,7 @@
                         <i class="pi pi-book" style="font-size: 6rem"></i>
                       </div>
                       <div style>
-                        <div><b>Name: </b>{{ room.number }}</div>
+                        <div><b>Number: </b>{{ room.number }}</div>
                         <div class="col">
                           <div id="hover" div class="pi pi-pencil"
                             style="font-size: 1,5rem; cursor: pointer; margin-left: 50px"
@@ -52,12 +52,12 @@
     </div>
   </div>
   
-  <!-- =============================MODAL FOR ADDING A COMPANY================================= -->
+  <!-- =============================MODAL FOR ADDING A ROOM================================= -->
   
   <p-dialog header="Add Room" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}"
     [draggable]="false" [resizable]="false">
     <form [formGroup]="addRoomForm">
-      <label for="float-input">Name</label>
+      <label for="float-input">Number</label>
       <br />
       <input placeholder="Room's Number" id="float-input" type="text" pInputText formControlName="numberControl"
         [style]="{width: '100%'}" />
@@ -72,7 +72,7 @@
     </div>
   </p-dialog>
   
-  <!-- =============================MODAL FOR EDITING A BUILDING================================= -->
+  <!-- =============================MODAL FOR EDITING A ROOM================================= -->
   
   <p-dialog header="Edit Building" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
       [draggable]="false" [resizable]="false">
@@ -107,7 +107,7 @@
         ">
             <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
             <button pButton type="button" label="Delete" class="p-button-success"
-                (click)="deleteRoom(roomIdToDelete)"></button>
+                (click)="deleteRoom(roomId)"></button>
         </div>
     </div>
   </p-dialog>

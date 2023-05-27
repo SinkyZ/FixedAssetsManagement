@@ -34,7 +34,7 @@ public class BuildingController {
         return new ResponseEntity<>(building, HttpStatus.OK);
     }
 
-    @GetMapping("building/{buildingId}")
+    @GetMapping("/building/{buildingId}")
     public ResponseEntity<List<Room>> getRoomsByBuildingId(@PathVariable("buildingId") String buildingId) {
         List<Room> allRoomsByBuildingId = roomService.getRoomsByBuildingId(buildingId);
         return new ResponseEntity<>(allRoomsByBuildingId, HttpStatus.OK);

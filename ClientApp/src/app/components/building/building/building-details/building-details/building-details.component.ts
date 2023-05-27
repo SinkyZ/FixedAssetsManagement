@@ -15,99 +15,95 @@ export class BuildingDetailsComponent {
 
   buildingId: any;
   roomList!: Observable<Room[]>;
-  roomIdToDelete: any;
   roomId: any;
 
   constructor(
     private roomService: RoomService,
-    private activatedRoute: ActivatedRoute) {}
+    private buildingService: BuildingService,
+    private activatedRoute: ActivatedRoute) { }
 
-    getEventValue($event: any): string {
-      return $event.target.value;
-    }
-    
-    ngOnInit(): void {
-      this.activatedRoute.paramMap.subscribe((params) => {
-        this.buildingId = params.get('buildingId');
-        this.refreshRoomList();
-      })
-    }
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
 
-    addRoomForm = new FormGroup({
-      numberControl: new FormControl('', [Validators.required]),
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.buildingId = params.get('buildingId');
+      this.refreshRoomList();
+    })
+  }
+
+  addRoomForm = new FormGroup({
+    numberControl: new FormControl('', [Validators.required]),
+  });
+
+  editRoomForm = new FormGroup({
+    numberControl: new FormControl('', [Validators.required]),
+  });
+
+  displayAddModal: boolean = false;
+  displayDeleteModal: boolean = false;
+  displayEditModal: boolean = false;
+
+  refreshRoomList() {
+    this.roomList = this.buildingService.getRoomsByBuildingId(this.buildingId);
+  }
+
+  addRoom() {
+    var newRoom = new Room();
+    newRoom.number = this.addRoomForm.controls.numberControl.value!
+    newRoom.buildingId = this.buildingId
+    this.roomService.addRoom(newRoom).subscribe(() => {
+      this.refreshRoomList();
     });
-  
-    editRoomForm = new FormGroup({
-      numberControl: new FormControl('', [Validators.required]),
-    });
-    
-    displayAddModal: boolean = false;
-    displayDeleteModal: boolean = false;
-    displayEditModal: boolean = false;
+    this.hideAddDialog();
+  }
 
-    refreshRoomList() {
-      this.roomList = this.roomService.getRoomsByBuildingId(this.buildingId);
-    }
-    addRoom() {
-      var newRoom = new Room();
-      newRoom.number = this.addRoomForm.controls.numberControl.value!
-      newRoom.buildingId = this.buildingId
-      this.roomService.addRoom(newRoom).subscribe(() => {
-        this.refreshRoomList();
-      });
-      this.hideAddDialog();
-    }
-
-    deleteRoom(id?: string)
-  {
-    if(id!==undefined) 
-    {
-      this.roomService.deleteRoom(id).subscribe(()=>{this.refreshRoomList();});
+  deleteRoom(id?: string) {
+    if (id !== undefined) {
+      this.roomService.deleteRoom(id).subscribe(() => { this.refreshRoomList(); });
     }
     this.hideDeleteDialog();
   }
 
-  updateRoom()
-  {
-    var room ={
+  updateRoom() {
+    var room = {
       id: this.roomId,
       number: this.editRoomForm.controls.numberControl.value!,
     }
-    this.roomService.updateRoom(this.roomId, room).subscribe(()=>{this.refreshRoomList();});
+    this.roomService.updateRoom(this.roomId, room).subscribe(() => { this.refreshRoomList(); });
     this.hideEditDialog();
   }
 
   // ======================= MODALS CONTROLS =====================================
 
-  showAddDialog(){
+  showAddDialog() {
     this.displayAddModal = true;
   }
 
-  hideAddDialog(){
+  hideAddDialog() {
     this.displayAddModal = false;
   }
   showDeleteDialog(room: Room) {
     this.displayDeleteModal = true;
-    if(room.id){
-      this.buildingId = room.id;
+    if (room.id) {
+      this.roomId = room.id;
     }
   }
 
-  hideDeleteDialog(){
+  hideDeleteDialog() {
     this.displayDeleteModal = false;
   }
 
-  showEditDialog(room: Room){
+  showEditDialog(room: Room) {
     this.displayEditModal = true;
-    if(room.id)
-    {
-      this.roomId=room.id;
+    if (room.id) {
+      this.roomId = room.id;
     }
     this.editRoomForm.controls.numberControl.setValue(room.number);
   }
 
-  hideEditDialog()
-  {
+  hideEditDialog() {
     this.displayEditModal = false;
   }
 }

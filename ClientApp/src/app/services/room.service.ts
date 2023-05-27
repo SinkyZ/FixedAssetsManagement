@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RoomService {
-  private url = "companies/buildings/rooms";
+  private url = "buildings/rooms";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -23,9 +23,11 @@ export class RoomService {
   public addRoom(room: Room): Observable<Room> {
     return this.httpClient.post<Room>(`${environment.apiUrl}/${this.url}`, room);
   }
+
   public deleteRoom(id: string): Observable<Room> {
     return this.httpClient.delete<Room>(`${environment.apiUrl}/${this.url}/${id}`);
   }
+
   public updateRoom(id: string, room: Room): Observable<Room> {
     return this.httpClient.put<Room>(`${environment.apiUrl}/${this.url}/${id}`, room);
   }

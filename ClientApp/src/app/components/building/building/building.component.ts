@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Building } from 'src/app/models/building.model';
 import { BuildingService } from 'src/app/services/building.service';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-building',
@@ -13,6 +14,7 @@ import { BuildingService } from 'src/app/services/building.service';
 export class BuildingComponent {
 
   constructor(private buildingService: BuildingService,
+              private companyService: CompanyService,
               private activatedRoute: ActivatedRoute,) {}
 
   buildingList!: Observable<Building[]>;
@@ -53,7 +55,7 @@ export class BuildingComponent {
   }
 
   refreshBuildingList() {
-    this.buildingList = this.buildingService.getBuildingsByCompanyId(this.companyId)
+    this.buildingList = this.companyService.getBuildingsByCompanyId(this.companyId)
       .pipe(
         tap((buildings) => {
         })

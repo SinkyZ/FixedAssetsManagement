@@ -5,7 +5,7 @@
     [style]="{width: '150px', height: '40px'}" pButton pRipple label="Add Building" icon="pi pi-plus"></button>
 </div>
 
-<!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
+<!-- ===========================DATAVIEW WITH BUILDINGS====================== -->
 <div id="ua" style="display: flex; flex-direction: column; width: 100%">
   <div id="b">
     <div class="card">
@@ -53,7 +53,7 @@
   </div>
 </div>
 
-<!-- =============================MODAL FOR ADDING A COMPANY================================= -->
+<!-- =============================MODAL FOR ADDING A BUILDING================================= -->
 
 <p-dialog header="Add Building" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}"
   [draggable]="false" [resizable]="false">
@@ -118,7 +118,7 @@
       ">
       <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
       <button pButton type="button" label="Delete" class="p-button-success"
-        (click)="deleteBuilding(buildingIdToDelete)"></button>
+        (click)="deleteBuilding(buildingId)"></button>
     </div>
   </div>
 </p-dialog>

@@ -4,6 +4,7 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Company } from '../models/company.model';
+import { Building } from '../models/building.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,9 @@ export class CompanyService {
 
   public getAllCompanies(): Observable<Company[]> {
     return this.httpClient.get<Company[]>(`${environment.apiUrl}/${this.url}`);
+  }
+  public getBuildingsByCompanyId(companyId: string): Observable<Building[]> {
+    return this.httpClient.get<Building[]>(`${environment.apiUrl}/${this.url}/companyDetails/${companyId}`);
   }
   public getCompanyById(id: number): Observable<Company> {
     return this.httpClient.get<Company>(`${environment.apiUrl}/${this.url}/${id}`);

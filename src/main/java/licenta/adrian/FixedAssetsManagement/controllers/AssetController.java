@@ -39,7 +39,6 @@ public class AssetController {
         Asset newAsset = new Asset();
         newAsset.setName(assetDTO.getName());
         newAsset.setDescription(assetDTO.getDescription());
-        newAsset.setIsWorking(assetDTO.getWorking());
         newAsset.setRoom(roomService.getRoomById(assetDTO.getRoomId()));
         //TODO; Dropdown with all categories to get the id.
         newAsset.setCategory(assetDTO.getCategory());
@@ -52,7 +51,6 @@ public class AssetController {
         assetToUpdate.setName(asset.getName());
         assetToUpdate.setDescription(asset.getDescription());
         assetToUpdate.setCategory(asset.getCategory());
-        assetToUpdate.setIsWorking(asset.getIsWorking());
         assetService.updateAsset(assetToUpdate);
         return new ResponseEntity<>(assetToUpdate, HttpStatus.OK);
     }

@@ -19,6 +19,7 @@ import { CardModule } from 'primeng/card';
 import { BuildingComponent } from './components/building/building/building.component';
 import { CompanyDetailsComponent } from './components/company/company/company-details/company-details/company-details.component';
 import { BuildingDetailsComponent } from './components/building/building/building-details/building-details/building-details.component';
+import { RoomDetailsComponent } from './components/room/room-details/room-details/room-details.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { BuildingDetailsComponent } from './components/building/building/buildin
     BuildingComponent,
     CompanyDetailsComponent,
     BuildingDetailsComponent,
+    RoomDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,7 +50,8 @@ import { BuildingDetailsComponent } from './components/building/building/buildin
       { path: 'assets', component: AssetsComponent },
       { path: 'companies', component: CompanyComponent },
       { path: 'companies/companyDetails/:companyId', component: CompanyDetailsComponent },
-      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent }
+      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent },
+      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent }
     ])
   ],
   providers: [],

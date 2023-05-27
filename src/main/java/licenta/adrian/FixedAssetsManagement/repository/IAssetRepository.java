@@ -1,7 +1,7 @@
 package licenta.adrian.FixedAssetsManagement.repository;
 
 import licenta.adrian.FixedAssetsManagement.model.Asset;
-import licenta.adrian.FixedAssetsManagement.model.Room;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

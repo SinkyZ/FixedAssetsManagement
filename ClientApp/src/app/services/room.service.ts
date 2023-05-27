@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Room } from '../models/room.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { Asset } from '../models/asset.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class RoomService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getRoomsByBuildingId(buildingId: string): Observable<Room[]> {
-    return this.httpClient.get<Room[]>(`${environment.apiUrl}/${this.url}/building/${buildingId}`);
+  public getAssetsByRoomId(roomId: string) {
+    return this.httpClient.get<Asset[]>(`${environment.apiUrl}/${this.url}/room/${roomId}`);
   }
 
   public getRoomById(id: number): Observable<Room> {

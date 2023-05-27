@@ -13,8 +13,8 @@ public class Asset implements Serializable {
     private String id;
     private String name;
     private String description;
-
-    private Boolean isWorking;
+    private String category;
+    private String isWorking;
 
     @Column(nullable = false, updatable = false)
     private String code;
@@ -24,19 +24,14 @@ public class Asset implements Serializable {
     @JoinColumn(name = "roomId")
     private Room room;
 
-    @JsonIgnore
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId")
-    private Category category;
 
-    public Asset(String id, String name, String description, Boolean isWorking, String code, Room room, Category category) {
+    public Asset(String id, String name, String description, String isWorking, String code, Room room) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.isWorking = isWorking;
         this.code = code;
         this.room = room;
-        this.category = category;
     }
 
     public Asset() {
@@ -67,12 +62,20 @@ public class Asset implements Serializable {
         this.description = description;
     }
 
-    public Boolean getWorking() {
+    public String getIsWorking() {
         return isWorking;
     }
 
-    public void setWorking(Boolean working) {
-        isWorking = working;
+    public void setIsWorking(String isWorking) {
+        this.isWorking = isWorking;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getCode() {
@@ -91,14 +94,6 @@ public class Asset implements Serializable {
         this.room = room;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     @Override
     public String toString() {
         return "Asset{" +
@@ -108,7 +103,6 @@ public class Asset implements Serializable {
                 ", isWorking=" + isWorking +
                 ", code='" + code + '\'' +
                 ", room=" + room +
-                ", category=" + category +
                 '}';
     }
 }

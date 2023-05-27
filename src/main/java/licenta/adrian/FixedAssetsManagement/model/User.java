@@ -13,7 +13,11 @@ public class User implements Serializable {
     @Id
     @Column(nullable = false, updatable = false)
     private String id;
-    private String name;
+    private String userName;
+    private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
     private String role;
     private String phone;
 
@@ -28,16 +32,22 @@ public class User implements Serializable {
     )
     private Set<Room> rooms;
 
-    public User(String id, String name, String role, String phone, Set<Room> rooms) {
-        this.id = id;
-        this.name = name;
-        this.role = role;
-        this.phone = phone;
-        this.rooms = rooms;
-    }
+
 
     public User() {
 
+    }
+
+    public User(String id, String userName, String password, String email, String firstName, String lastName, String role, String phone, Set<Room> rooms) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.phone = phone;
+        this.rooms = rooms;
     }
 
     public String getId() {
@@ -48,12 +58,44 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getRole() {
@@ -72,7 +114,6 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-
     public Set<Room> getRooms() {
         return rooms;
     }
@@ -85,7 +126,11 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", role='" + role + '\'' +
                 ", phone='" + phone + '\'' +
                 ", rooms=" + rooms +

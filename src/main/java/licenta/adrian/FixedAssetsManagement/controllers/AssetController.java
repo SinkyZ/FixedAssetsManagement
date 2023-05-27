@@ -17,12 +17,10 @@ import java.util.List;
 public class AssetController {
     private final AssetService assetService;
     private final RoomService roomService;
-    private final CategoryService categoryService;
 
-    public AssetController(AssetService assetService, RoomService roomService, CategoryService categoryService) {
+    public AssetController(AssetService assetService, RoomService roomService) {
         this.assetService = assetService;
         this.roomService = roomService;
-        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -41,9 +39,10 @@ public class AssetController {
         Asset newAsset = new Asset();
         newAsset.setName(assetDTO.getName());
         newAsset.setDescription(assetDTO.getDescription());
-        newAsset.setWorking(assetDTO.getWorking());
+        newAsset.setIsWorking(assetDTO.getWorking());
         newAsset.setRoom(roomService.getRoomById(assetDTO.getRoomId()));
-        newAsset.setCategory(categoryService.getCategoryById(assetDTO.getCategoryId()));
+        //TODO; Dropdown with all categories to get the id.
+        newAsset.setCategory(assetDTO.getCategory());
         assetService.addAsset(newAsset);
         return new ResponseEntity<>(newAsset, HttpStatus.CREATED);
     }
@@ -52,10 +51,25 @@ public class AssetController {
         Asset assetToUpdate = assetService.getAssetById(id);
         assetToUpdate.setName(asset.getName());
         assetToUpdate.setDescription(asset.getDescription());
-        assetToUpdate.setWorking(asset.getWorking());
+        assetToUpdate.setCategory(asset.getCategory());
+        assetToUpdate.setIsWorking(asset.getIsWorking());
         assetService.updateAsset(assetToUpdate);
         return new ResponseEntity<>(assetToUpdate, HttpStatus.OK);
     }
+
+    @PutMapping("/status/{id}")
+    public ResponseEntity<Asset> updateStatus(@PathVariable("id") String id, @RequestBody Asset asset){
+        Asset assetToUpdate = assetService.getAssetById(id);
+        if(asset.getIsWorking() != null)
+        {
+            assetToUpdate.setIsWorking(asset.getIsWorking());
+        }
+
+        assetToUpdate.setIsWorking(asset.getIsWorking());
+        assetService.updateAsset(assetToUpdate);
+        return new ResponseEntity<>(assetToUpdate, HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteAsset(@PathVariable("id") String id){
         assetService.deleteAsset(id);

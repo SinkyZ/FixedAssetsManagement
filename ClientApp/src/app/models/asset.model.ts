@@ -1,7 +1,9 @@
-import { Guid } from 'guid-typescript';
-
-export class Asset{
+export class Asset {
     id?: string;
+    code?: string;
     name: string = '';
-    assetCode?: Guid;
+    description: string = '';
+    isWorking?: string | null;
+    roomId?: string;
+    category: string ='';
 }

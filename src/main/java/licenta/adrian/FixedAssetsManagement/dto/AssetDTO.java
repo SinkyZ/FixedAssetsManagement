@@ -3,9 +3,9 @@ package licenta.adrian.FixedAssetsManagement.dto;
 public class AssetDTO {
     private String name;
     private String description;
-    private Boolean isWorking;
+    private String isWorking;
     private String roomId;
-    private String categoryId;
+    private String category;
 
     public String getName() {
         return name;
@@ -31,19 +31,19 @@ public class AssetDTO {
         this.roomId = roomId;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public Boolean getWorking() {
+    public String getWorking() {
         return isWorking;
     }
 
-    public void setWorking(Boolean working) {
+    public void setWorking(String working) {
         isWorking = working;
     }
 }

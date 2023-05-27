@@ -2,6 +2,7 @@ package licenta.adrian.FixedAssetsManagement.controllers;
 
 import licenta.adrian.FixedAssetsManagement.dto.AssetDTO;
 import licenta.adrian.FixedAssetsManagement.model.Asset;
+import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.services.AssetService;
 import licenta.adrian.FixedAssetsManagement.services.CategoryService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/assets")
+@RequestMapping("room/assets")
 public class AssetController {
     private final AssetService assetService;
     private final RoomService roomService;
@@ -29,6 +30,7 @@ public class AssetController {
         List<Asset> allAssets = assetService.getAllAssets();
         return new ResponseEntity<>(allAssets, HttpStatus.OK);
     }
+
     @GetMapping("{id}")
     public ResponseEntity<Asset> getAssetById(@PathVariable("id") String id){
         Asset asset = assetService.getAssetById(id);

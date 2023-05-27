@@ -28,7 +28,7 @@
                       <i class="pi pi-book" style="font-size: 6rem"></i>
                     </div>
                     <div style>
-                      <div><b>Name: </b>{{ building.name }}</div>
+                      <div><b class="mt-4">Name: </b>{{ building.name }}</div>
                       <div><b>Address: </b>{{ building.address }}</div>
                       <div class="col">
                         <div id="hover" div class="pi pi-pencil"
@@ -81,44 +81,44 @@
 <!-- =============================MODAL FOR EDITING A BUILDING================================= -->
 
 <p-dialog header="Edit Building" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
-    [draggable]="false" [resizable]="false">
-    <form [formGroup]="editBuildingForm">
-        <label for="float-input">Name</label>
-        <br />
-        <input placeholder="nameControl" id="float-input" type="text" pInputText formControlName="nameControl"
-            [style]="{width: '100%'}" />
-        <br />
-        <label for="float-input">Address</label>
-        <br />
-        <input placeholder="addressControl" id="float-input" type="text" pInputText formControlName="addressControl"
-            [style]="{width: '100%'}" />
-        <br />
-    </form>
-    <div class="buttons-container">
-        <button pButton pRipple type="button" label="Close" (click)="hideEditDialog()"
-            class="modal-button btn-pos p-button-danger"></button>
-        <button pButton pRipple type="submit" label="Submit" (click)="updateBuilding()"
-            [disabled]="!editBuildingForm.valid" class="modal-button btn-pos p-button-success"></button>
-    </div>
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="editBuildingForm">
+    <label for="float-input">Name</label>
+    <br />
+    <input placeholder="nameControl" id="float-input" type="text" pInputText formControlName="nameControl"
+      [style]="{width: '100%'}" />
+    <br />
+    <label for="float-input">Address</label>
+    <br />
+    <input placeholder="addressControl" id="float-input" type="text" pInputText formControlName="addressControl"
+      [style]="{width: '100%'}" />
+    <br />
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="button" label="Close" (click)="hideEditDialog()"
+      class="modal-button btn-pos p-button-danger"></button>
+    <button pButton pRipple type="submit" label="Submit" (click)="updateBuilding()" [disabled]="!editBuildingForm.valid"
+      class="modal-button btn-pos p-button-success"></button>
+  </div>
 </p-dialog>
 
 <!---------------------- DELETE MODAL ------------------------>
 <p-dialog [(visible)]="displayDeleteModal" styleClass="asset-dialog" [modal]="true">
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
-      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
-      <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
-      <p style="margin-top: 10px; text-align: center">
-          Do you realy want to delete this building? This process cannot be undone.
-      </p>
-      <div style="
+    <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this building? This process cannot be undone.
+    </p>
+    <div style="
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         margin-top: 40px;
       ">
-          <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
-          <button pButton type="button" label="Delete" class="p-button-success"
-              (click)="deleteBuilding(buildingIdToDelete)"></button>
-      </div>
+      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
+      <button pButton type="button" label="Delete" class="p-button-success"
+        (click)="deleteBuilding(buildingIdToDelete)"></button>
+    </div>
   </div>
 </p-dialog>

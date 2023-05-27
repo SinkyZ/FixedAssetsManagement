@@ -2,11 +2,11 @@ package licenta.adrian.FixedAssetsManagement.controllers;
 
 import licenta.adrian.FixedAssetsManagement.dto.RoomDTO;
 
-import licenta.adrian.FixedAssetsManagement.model.Building;
+import licenta.adrian.FixedAssetsManagement.model.Asset;
 import licenta.adrian.FixedAssetsManagement.model.Room;
+import licenta.adrian.FixedAssetsManagement.services.AssetService;
 import licenta.adrian.FixedAssetsManagement.services.BuildingService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
-import licenta.adrian.FixedAssetsManagement.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +15,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies/buildings/rooms/")
+@RequestMapping("building/rooms")
 public class RoomController {
 
     @Autowired
     private final BuildingService buildingService;
-    @Autowired
     private final RoomService roomService;
+    private final AssetService assetService;
 
-    public RoomController(BuildingService buildingService, RoomService roomService) {
+    public RoomController(BuildingService buildingService, RoomService roomService, AssetService assetService) {
         this.buildingService = buildingService;
         this.roomService = roomService;
+        this.assetService = assetService;
     }
 
     @GetMapping
@@ -34,10 +35,10 @@ public class RoomController {
         return new ResponseEntity<>(allRooms, HttpStatus.OK);
     }
 
-    @GetMapping("building/{buildingId}")
-    public ResponseEntity<List<Room>> getRoomsByBuildingId(@PathVariable("buildingId") String buildingId) {
-        List<Room> allRoomsByBuildingId = roomService.getRoomsByBuildingId(buildingId);
-        return new ResponseEntity<>(allRoomsByBuildingId, HttpStatus.OK);
+    @GetMapping("room/{roomId}")
+    public ResponseEntity<List<Asset>> getAssetsByRoomId(@PathVariable("roomId") String roomId) {
+        List<Asset> allAssetsByRoomId = assetService.getAssetsByRoomId(roomId);
+        return new ResponseEntity<>(allAssetsByRoomId, HttpStatus.OK);
     }
 
     @GetMapping("{id}")

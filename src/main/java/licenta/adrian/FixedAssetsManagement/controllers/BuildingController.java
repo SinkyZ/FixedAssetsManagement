@@ -2,8 +2,10 @@ package licenta.adrian.FixedAssetsManagement.controllers;
 
 import licenta.adrian.FixedAssetsManagement.dto.BuildingDTO;
 import licenta.adrian.FixedAssetsManagement.model.Building;
+import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.services.BuildingService;
 import licenta.adrian.FixedAssetsManagement.services.CompanyService;
+import licenta.adrian.FixedAssetsManagement.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,30 +14,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies/building")
+@RequestMapping("buildings")
 public class BuildingController {
 
     @Autowired
     private final BuildingService buildingService;
-    @Autowired
     private final CompanyService companyService;
+    private final RoomService roomService;
 
-
-    public BuildingController(BuildingService buildingService, CompanyService companyService) {
+    public BuildingController(BuildingService buildingService, CompanyService companyService, RoomService roomService) {
         this.buildingService = buildingService;
         this.companyService = companyService;
-    }
-
-    @GetMapping("company/{companyId}")
-    public ResponseEntity<List<Building>> getBuildingsByCompanyId(@PathVariable("companyId") String companyId) {
-        List<Building> allBuildings = buildingService.getBuildingsByCompanyId(companyId);
-        return new ResponseEntity<>(allBuildings, HttpStatus.OK);
+        this.roomService = roomService;
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Building> getBuildingId(@PathVariable("id") String id) {
         Building building = buildingService.getBuildingById(id);
         return new ResponseEntity<>(building, HttpStatus.OK);
+    }
+
+    @GetMapping("building/{buildingId}")
+    public ResponseEntity<List<Room>> getRoomsByBuildingId(@PathVariable("buildingId") String buildingId) {
+        List<Room> allRoomsByBuildingId = roomService.getRoomsByBuildingId(buildingId);
+        return new ResponseEntity<>(allRoomsByBuildingId, HttpStatus.OK);
     }
 
     @PostMapping

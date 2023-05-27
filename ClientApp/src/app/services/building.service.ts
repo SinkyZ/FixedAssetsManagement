@@ -8,7 +8,7 @@ import { Building } from '../models/building.model';
   providedIn: 'root'
 })
 export class BuildingService {
-  private url = "companies/";
+  private url = "companies";
 
   constructor(private httpClient: HttpClient) { }
 

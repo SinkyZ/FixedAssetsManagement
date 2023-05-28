@@ -36,8 +36,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO){
         User newUser = new User();
-        newUser.setUserName(userDTO.getUserName());
         //TODO: Decide how u encrypt and set the password.
+        newUser.setEmail(userDTO.getEmail());
         newUser.setPassword(userDTO.getPassword());
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
@@ -50,7 +50,9 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody User user){
         User userToUpdate = userService.getUserById(id);
         //TODO: Decide what u want to update for an user.
+        userToUpdate.setEmail(user.getEmail());
         userToUpdate.setFirstName(user.getFirstName());
+        userToUpdate.setLastName(user.getLastName());
         userToUpdate.setRole(user.getRole());
         userToUpdate.setPhone(user.getPhone());
         userService.updateUser(userToUpdate);

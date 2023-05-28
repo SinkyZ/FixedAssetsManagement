@@ -1,0 +1,151 @@
+<!-- =====================================ADD ROOM BUTTON=============================== -->
+
+<div class="add-button-container">
+    <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help"
+        [style]="{width: '150px', height: '40px'}" pButton pRipple label="Add User" icon="pi pi-plus"></button>
+</div>
+
+<!-- ===========================DATAVIEW WITH ROOMS====================== -->
+<div id="ua" style="display: flex; flex-direction: column; width: 100%">
+    <div id="b">
+        <div class="card">
+            <div *ngIf="userList | async; let user">
+                <p-dataView #dv [value]="user" [paginator]="true" [rows]="3" filterBy="name" layout="list">
+                    <ng-template pTemplate="header">
+                        <div class="flex flex-column md:flex-row md:justify-content-between">
+                            <span class="p-input-icon-left mb-2 md:mb-0">
+                                <input type="search" pInputText placeholder="Search by Name"
+                                    (input)="dv.filter(getEventValue($event))" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template let-user pTemplate="listItem">
+                        <div class="col-12">
+                            <div class="container">
+                                <div class="row">
+                                    <div class>
+                                        <div>
+                                            <i class="pi pi-book" style="font-size: 6rem"></i>
+                                        </div>
+                                        <div style>
+                                            <div><b>FirstName: </b>{{ user.firstName }}</div>
+                                            <div><b>LastName: </b>{{ user.lastName }}</div>
+                                            <div><b>Email: </b>{{ user.email }}</div>
+                                            <div><b>Role: </b>{{ user.role }}</div>
+                                            <div><b>Phone: </b>{{ user.phone }}</div>
+                                            <div class="col">
+                                                <div id="hover" div class="pi pi-pencil"
+                                                    style="font-size: 1,5rem; cursor: pointer; margin-left: 50px"
+                                                    (click)="showEditDialog(user)">
+                                                </div>
+                                                <div id="hover" div class="pi pi-trash"
+                                                    style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
+                                                    (click)="showDeleteDialog(user)"></div>
+                                                <div id="hover" div title="Display Building"
+                                                    class="card-button pi pi-bars"
+                                                    style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
+                                                    routerLink="userDetails/{{ this.user.id }}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dataView>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============================MODAL FOR ADDING A USER================================= -->
+
+<p-dialog header="Add User" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}" [draggable]="false"
+    [resizable]="false">
+    <form [formGroup]="addUserForm">
+        <label for="float-input">First Name</label>
+        <br />
+        <input placeholder="User's FirstName" id="float-input" type="text" pInputText formControlName="firstNameControl"
+            [style]="{width: '100%'}" />
+        <label for="float-input">Last Name</label>
+        <input placeholder="User's LastName" id="float-input" type="text" pInputText formControlName="lastNameControl"
+            [style]="{width: '100%'}" />
+        <label for="float-input">Email</label>
+        <input placeholder="User's Email" id="float-input" type="email" name="email" ngModel email="true" pInputText
+            formControlName="emailControl" [style]="{width: '100%'}" />
+        <label for="float-input">Role</label>
+        <input placeholder="User's Role" id="float-input" type="text" pInputText formControlName="roleControl"
+            [style]="{width: '100%'}" />
+        <label for="phone">Phone</label>
+        <input placeholder="User's Phone" id="phone"  type="text" pInputText formControlName="phoneControl"
+            [style]="{width: '100%'}" />
+        <br />
+    </form>
+    <div class="buttons-container">
+        <button pButton pRipple type="submit" label="Close" (click)="hideAddDialog()"
+            class="modal-button btn-pos p-button-danger"></button>
+
+        <button pButton pRipple type="submit" label="Submit" (click)="addUser()" [disabled]="!addUserForm.valid"
+            class="modal-button btn-pos p-button-success"></button>
+    </div>
+</p-dialog>
+
+<!-- =============================MODAL FOR EDITING AN USER================================= -->
+
+<p-dialog header="Edit User" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
+    [draggable]="false" [resizable]="false">
+    <form [formGroup]="editUserForm">
+        <label for="float-input">First Name</label>
+        <br />
+        <input placeholder="firstNameControl" id="float-input" type="text" pInputText formControlName="firstNameControl"
+            [style]="{width: '100%'}" />
+        <br />
+        <label for="float-input">Last Name</label>
+        <br />
+        <input placeholder="lastNameControl" id="float-input" type="text" pInputText formControlName="lastNameControl"
+            [style]="{width: '100%'}" />
+        <br />
+        <label for="float-input">Email</label>
+        <br />
+        <input placeholder="emailControl" id="float-input" type="email" name="email" ngModel email="true" pInputText
+            formControlName="emailControl" [style]="{width: '100%'}" />
+        <br />
+        <label for="float-input">Role</label>
+        <br />
+        <input placeholder="roleControl" id="float-input" type="text" pInputText formControlName="roleControl"
+            [style]="{width: '100%'}" />
+        <br />
+        <label for="float-input">Phone</label>
+        <br />
+        <input placeholder="phoneControl" id="float-input" type="text" pInputText formControlName="phoneControl"
+            [style]="{width: '100%'}" />
+        <br />
+    </form>
+    <div class="buttons-container">
+        <button pButton pRipple type="button" label="Close" (click)="hideEditDialog()"
+            class="modal-button btn-pos p-button-danger"></button>
+        <button pButton pRipple type="submit" label="Submit" (click)="updateUser()" [disabled]="!editUserForm.valid"
+            class="modal-button btn-pos p-button-success"></button>
+    </div>
+</p-dialog>
+
+<!---------------------- DELETE MODAL ------------------------>
+<p-dialog [(visible)]="displayDeleteModal" styleClass="asset-dialog" [modal]="true">
+    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+        <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
+        <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+        <p style="margin-top: 10px; text-align: center">
+            Do you realy want to delete this user? This process cannot be undone.
+        </p>
+        <div style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 40px;
+          ">
+            <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
+            <button pButton type="button" label="Delete" class="p-button-success"
+                (click)="deleteUser(userIdToDelete)"></button>
+        </div>
+    </div>
+</p-dialog>

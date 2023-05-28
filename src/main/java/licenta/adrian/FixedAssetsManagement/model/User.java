@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +14,6 @@ public class User implements Serializable {
     @Id
     @Column(nullable = false, updatable = false)
     private String id;
-    private String userName;
     private String password;
     private String email;
     private String firstName;
@@ -21,26 +21,15 @@ public class User implements Serializable {
     private String role;
     private String phone;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_ROOM_TABLE",
-            joinColumns = {
-                    @JoinColumn(name = "userId", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "roomId", referencedColumnName = "id")
-            }
-    )
-    private Set<Room> rooms;
-
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Room> rooms = new ArrayList<>();
 
     public User() {
 
     }
 
-    public User(String id, String userName, String password, String email, String firstName, String lastName, String role, String phone, Set<Room> rooms) {
+    public User(String id, String password, String email, String firstName, String lastName, String role, String phone, List<Room> rooms) {
         this.id = id;
-        this.userName = userName;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
@@ -56,14 +45,6 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
@@ -114,11 +95,11 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public Set<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(Set<Room> rooms) {
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 
@@ -126,7 +107,6 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +

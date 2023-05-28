@@ -20,6 +20,8 @@ import { BuildingComponent } from './components/building/building/building.compo
 import { CompanyDetailsComponent } from './components/company/company/company-details/company-details/company-details.component';
 import { BuildingDetailsComponent } from './components/building/building/building-details/building-details/building-details.component';
 import { RoomDetailsComponent } from './components/room/room-details/room-details/room-details.component';
+import { UserTableComponent } from './components/user/user-table/user-table/user-table.component';
+import { UserDetailsComponent } from './components/user/user-details/user-details/user-details.component';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { RoomDetailsComponent } from './components/room/room-details/room-detail
     CompanyDetailsComponent,
     BuildingDetailsComponent,
     RoomDetailsComponent,
+    UserTableComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,7 +55,8 @@ import { RoomDetailsComponent } from './components/room/room-details/room-detail
       { path: 'companies', component: CompanyComponent },
       { path: 'companies/companyDetails/:companyId', component: CompanyDetailsComponent },
       { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent },
-      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent }
+      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent },
+      { path: 'users', component: UserTableComponent }
     ])
   ],
   providers: [],

@@ -5,4 +5,5 @@ export class Room {
     number: string = '';
     buildingId?: string;
     asset?: Asset[];
+    userId?: string;
 }

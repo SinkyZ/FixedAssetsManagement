@@ -1,6 +1,8 @@
 package licenta.adrian.FixedAssetsManagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.bytebuddy.utility.nullability.AlwaysNull;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,6 @@ import java.util.Set;
 public class Room implements Serializable {
 
     @Id
-
     @Column(nullable = false, updatable = false)
     private String id;
     private String number;
@@ -23,15 +24,17 @@ public class Room implements Serializable {
 
     @OneToMany(mappedBy ="room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Asset> assets;
-    @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY)
-    private Set<User> users;
 
-    public Room(String id, String number, Building building, List<Asset> assets, Set<User> users) {
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @Nullable
+    @JoinColumn(name = "userId", nullable = true)
+    private User user;
+
+    public Room(String id, String number, Building building, List<Asset> assets) {
         this.id = id;
         this.number = number;
         this.building = building;
         this.assets = assets;
-        this.users = users;
     }
 
     public Room() {
@@ -70,12 +73,12 @@ public class Room implements Serializable {
         this.assets = assets;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -85,7 +88,7 @@ public class Room implements Serializable {
                 ", number='" + number + '\'' +
                 ", building=" + building +
                 ", assets=" + assets +
-                ", users=" + users +
+                ", user=" + user +
                 '}';
     }
 }

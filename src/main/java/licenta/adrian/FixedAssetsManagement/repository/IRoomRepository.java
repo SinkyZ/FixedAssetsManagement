@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface IRoomRepository extends JpaRepository<Room, String> {
     void deleteRoomById(String id);
     List<Room> findRoomsByBuildingId(String buildingId);
+    List<Room> findRoomsByUserId(String userId);
     Optional<Room> findRoomById(String id);
 }

@@ -25,6 +25,7 @@ public class Room implements Serializable {
     @OneToMany(mappedBy ="room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Asset> assets;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @Nullable
     @JoinColumn(name = "userId", nullable = true)

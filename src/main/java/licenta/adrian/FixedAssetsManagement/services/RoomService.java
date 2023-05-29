@@ -34,6 +34,9 @@ public class RoomService {
     public List<Room> getRoomsByBuildingId(String buildingId){
         return roomRepository.findRoomsByBuildingId(buildingId);
     }
+    public List<Room> getRoomByUserId(String userId){
+        return roomRepository.findRoomsByUserId(userId);
+    }
     public Room updateRoom(Room room){
         return roomRepository.save(room);
     }

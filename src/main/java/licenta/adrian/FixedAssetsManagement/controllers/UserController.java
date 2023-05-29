@@ -1,8 +1,10 @@
 package licenta.adrian.FixedAssetsManagement.controllers;
 
 import licenta.adrian.FixedAssetsManagement.dto.UserDTO;
+import licenta.adrian.FixedAssetsManagement.model.Asset;
+import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.model.User;
-import licenta.adrian.FixedAssetsManagement.services.CompanyService;
+import licenta.adrian.FixedAssetsManagement.services.RoomService;
 import licenta.adrian.FixedAssetsManagement.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,12 @@ public class UserController {
 
     @Autowired
     private final UserService userService;
+    private final RoomService roomService;
 
-     public UserController(UserService userService)
+     public UserController(UserService userService, RoomService roomService)
      {
          this.userService = userService;
+         this.roomService = roomService;
      }
 
     @GetMapping
@@ -28,6 +32,13 @@ public class UserController {
         List<User> allUsers = userService.getAllUsers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
+
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<Room>> getRoomsByUserId(@PathVariable("userId") String userId) {
+        List<Room> allRoomsByUserId = roomService.getRoomByUserId(userId);
+        return new ResponseEntity<>(allRoomsByUserId, HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") String id){
         User user = userService.getUserById(id);
@@ -63,4 +74,14 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+        @PutMapping("userDetails/{id}/{roomId}")
+        public ResponseEntity<Room> updateUser(@PathVariable("id") String id, @PathVariable String roomId){
+            User user = userService.getUserById(id);
+            Room room = roomService.getRoomById(roomId);
+
+            room.setUser(user);
+            roomService.updateRoom(room);
+            return new ResponseEntity<>(room, HttpStatus.OK);
+        }
 }

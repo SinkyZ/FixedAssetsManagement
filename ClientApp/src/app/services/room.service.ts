@@ -13,6 +13,10 @@ export class RoomService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public getAllRooms(): Observable<Room[]> {
+    return this.httpClient.get<Room[]>(`${environment.apiUrl}/${this.url}`);
+  }
+
   public getAssetsByRoomId(roomId: string) {
     return this.httpClient.get<Asset[]>(`${environment.apiUrl}/${this.url}/room/${roomId}`);
   }

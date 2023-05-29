@@ -56,7 +56,9 @@ import { UserDetailsComponent } from './components/user/user-details/user-detail
       { path: 'companies/companyDetails/:companyId', component: CompanyDetailsComponent },
       { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent },
       { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent },
-      { path: 'users', component: UserTableComponent }
+      { path: 'users', component: UserTableComponent },
+      { path: 'users/userDetails/:userId/roomDetails/:roomId', component: RoomDetailsComponent },
+      { path: 'users/userDetails/:userId', component: UserDetailsComponent }
     ])
   ],
   providers: [],

@@ -10,7 +10,7 @@
   <div id="b">
     <div class="card">
       <div *ngIf="roomList | async; let room">
-        <p-dataView #dv [value]="room" [paginator]="true" [rows]="3" filterBy="name" layout="list">
+        <p-dataView #dv [value]="room" [paginator]="true" [rows]="3" filterBy="number" layout="list">
           <ng-template pTemplate="header">
             <div class="flex flex-column md:flex-row md:justify-content-between">
               <span class="p-input-icon-left mb-2 md:mb-0">

@@ -14,14 +14,13 @@ import { Dialog, DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CompanyComponent } from './components/company/company/company.component';
 import { CardModule } from 'primeng/card';
-import { BuildingComponent } from './components/building/building/building.component';
 import { CompanyDetailsComponent } from './components/company/company/company-details/company-details/company-details.component';
 import { BuildingDetailsComponent } from './components/building/building/building-details/building-details/building-details.component';
 import { RoomDetailsComponent } from './components/room/room-details/room-details/room-details.component';
 import { UserTableComponent } from './components/user/user-table/user-table/user-table.component';
 import { UserDetailsComponent } from './components/user/user-details/user-details/user-details.component';
+import { CompanyComponent } from './components/company/company/company.component';
 
 
 @NgModule({
@@ -29,9 +28,8 @@ import { UserDetailsComponent } from './components/user/user-details/user-detail
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    AssetsComponent,
     CompanyComponent,
-    BuildingComponent,
+    AssetsComponent,
     CompanyDetailsComponent,
     BuildingDetailsComponent,
     RoomDetailsComponent,

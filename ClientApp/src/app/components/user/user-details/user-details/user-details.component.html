@@ -13,12 +13,15 @@
       align-items: center;
     ">
     <div *ngIf="user" style="margin: 50px; width: 90%">
-      <p-card header="{{ user.firstName}}">
+      <p-card header="{{ user.firstName}} {{user.lastName}}">
         <div style="background-color: #f7f7f7; margin-bottom: 10px">
-          <b>Role: </b> {{ user.lastName }}
+          <b>Role: </b> {{ user.role }}
         </div>
         <div style="background-color: #f7f7f7; margin-bottom: 10px">
           <b>Email:</b> {{ user.email }}
+        </div>
+        <div style="background-color: #f7f7f7; margin-bottom: 10px">
+          <b>Phone:</b> {{ user.phone }}
         </div>
       </p-card>
     </div>

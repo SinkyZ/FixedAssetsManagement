@@ -2,9 +2,7 @@ package licenta.adrian.FixedAssetsManagement.controllers;
 
 import licenta.adrian.FixedAssetsManagement.dto.AssetDTO;
 import licenta.adrian.FixedAssetsManagement.model.Asset;
-import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.services.AssetService;
-import licenta.adrian.FixedAssetsManagement.services.CategoryService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +38,6 @@ public class AssetController {
         newAsset.setName(assetDTO.getName());
         newAsset.setDescription(assetDTO.getDescription());
         newAsset.setRoom(roomService.getRoomById(assetDTO.getRoomId()));
-        //TODO; Dropdown with all categories to get the id.
         newAsset.setCategory(assetDTO.getCategory());
         assetService.addAsset(newAsset);
         return new ResponseEntity<>(newAsset, HttpStatus.CREATED);

@@ -1,9 +1,8 @@
 package licenta.adrian.FixedAssetsManagement.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -20,7 +19,7 @@ public class Asset implements Serializable {
     private String code;
 
     @JsonIgnore
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId")
     private Room room;
 

@@ -1,5 +1,6 @@
 package licenta.adrian.FixedAssetsManagement.controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import licenta.adrian.FixedAssetsManagement.dto.RoomDTO;
 
 import licenta.adrian.FixedAssetsManagement.model.Asset;
@@ -7,16 +8,19 @@ import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.services.AssetService;
 import licenta.adrian.FixedAssetsManagement.services.BuildingService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
-import licenta.adrian.FixedAssetsManagement.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("buildings/rooms")
+@PreAuthorize("hasRole('ADMIN')")
+@SecurityRequirement(name = "bearerAuth")
 public class RoomController {
 
     @Autowired

@@ -1,17 +1,23 @@
 package licenta.adrian.FixedAssetsManagement.controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import licenta.adrian.FixedAssetsManagement.dto.AssetDTO;
 import licenta.adrian.FixedAssetsManagement.model.Asset;
 import licenta.adrian.FixedAssetsManagement.services.AssetService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("room/assets")
+@PreAuthorize("hasRole('ADMIN')")
+@SecurityRequirement(name = "bearerAuth")
 public class AssetController {
     private final AssetService assetService;
     private final RoomService roomService;

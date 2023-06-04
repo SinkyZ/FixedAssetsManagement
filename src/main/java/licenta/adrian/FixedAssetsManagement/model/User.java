@@ -1,16 +1,20 @@
 package licenta.adrian.FixedAssetsManagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import licenta.adrian.FixedAssetsManagement.roles.Role;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;import java.util.List;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
+
 
 
 @Entity
-public class User implements Serializable {
+@RequiredArgsConstructor
+public class User implements UserDetails {
+
     @Id
     @Column(nullable = false, updatable = false)
     private String id;
@@ -18,26 +22,13 @@ public class User implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
 
-    public User() {
-
-    }
-
-    public User(String id, String password, String email, String firstName, String lastName, String role, String phone, List<Room> rooms) {
-        this.id = id;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.phone = phone;
-        this.rooms = rooms;
-    }
 
     public String getId() {
         return id;
@@ -47,8 +38,40 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthoritites();
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -79,11 +102,11 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

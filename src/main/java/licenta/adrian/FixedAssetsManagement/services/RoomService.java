@@ -1,8 +1,7 @@
 package licenta.adrian.FixedAssetsManagement.services;
 
 import licenta.adrian.FixedAssetsManagement.exception.RoomNotFoundException;
-import licenta.adrian.FixedAssetsManagement.exception.UserNotFoundException;
-import licenta.adrian.FixedAssetsManagement.model.Building;
+
 import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.repository.IRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;

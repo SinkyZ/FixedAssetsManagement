@@ -6,15 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableSwagger2
 public class FixedAssetsManagement {
 
 	public static void main(String[] args) {
@@ -39,8 +34,8 @@ public class FixedAssetsManagement {
 	}
 
 	//SWAGGER CONFIG
-	public Docket apis(){
-		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.demo")).build();
-	}
+	//public Docket apis(){
+		//return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.demo")).build();
+	//}
 
 }

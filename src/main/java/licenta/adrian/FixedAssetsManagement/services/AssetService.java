@@ -2,7 +2,6 @@ package licenta.adrian.FixedAssetsManagement.services;
 
 import licenta.adrian.FixedAssetsManagement.exception.AssetNotFoundException;
 import licenta.adrian.FixedAssetsManagement.model.Asset;
-import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.repository.IAssetRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

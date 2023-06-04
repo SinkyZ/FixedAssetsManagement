@@ -1,7 +1,10 @@
 package licenta.adrian.FixedAssetsManagement.controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import licenta.adrian.FixedAssetsManagement.auth.AuthenticationResponse;
+import licenta.adrian.FixedAssetsManagement.auth.PasswordGenerator;
+import licenta.adrian.FixedAssetsManagement.configuration.JwtService;
 import licenta.adrian.FixedAssetsManagement.dto.UserDTO;
-import licenta.adrian.FixedAssetsManagement.model.Asset;
 import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.model.User;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
@@ -9,22 +12,32 @@ import licenta.adrian.FixedAssetsManagement.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@PreAuthorize("hasRole('ADMIN')")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     @Autowired
     private final UserService userService;
     private final RoomService roomService;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final PasswordGenerator passwordGenerator;
 
-     public UserController(UserService userService, RoomService roomService)
+     public UserController(UserService userService, RoomService roomService, JwtService jwtService, PasswordEncoder passwordEncoder, PasswordGenerator passwordGenerator)
      {
          this.userService = userService;
          this.roomService = roomService;
+         this.jwtService = jwtService;
+         this.passwordEncoder = passwordEncoder;
+         this.passwordGenerator = passwordGenerator;
      }
 
     @GetMapping
@@ -44,18 +57,24 @@ public class UserController {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK );
     }
+
+    @GetMapping("/email")
+    public ResponseEntity<User> getUserByEmail(String email){
+        User user = userService.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK );
+    }
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO){
+    public AuthenticationResponse addUser(@RequestBody UserDTO userDTO){
         User newUser = new User();
-        //TODO: Decide how u encrypt and set the password.
         newUser.setEmail(userDTO.getEmail());
-        newUser.setPassword(userDTO.getPassword());
+        newUser.setPassword(passwordEncoder.encode(passwordGenerator.randomPasswordGenerator()));
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
         newUser.setPhone(userDTO.getPhone());
         newUser.setRole(userDTO.getRole());
         userService.addUser(newUser);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        String jwtToken = jwtService.generateToken(newUser);
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
     @PutMapping("{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody User user){

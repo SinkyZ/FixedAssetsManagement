@@ -1,12 +1,17 @@
 package licenta.adrian.FixedAssetsManagement.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import licenta.adrian.FixedAssetsManagement.roles.Role;
+
 public class UserDTO {
 
     private String password;
     private String firstName;
     private String lastName;
     private String email;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     private String phone;
 
 
@@ -42,11 +47,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

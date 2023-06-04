@@ -1,13 +1,11 @@
 package licenta.adrian.FixedAssetsManagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import net.bytebuddy.utility.nullability.AlwaysNull;
+import jakarta.persistence.*;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Room implements Serializable {

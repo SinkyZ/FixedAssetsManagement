@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN')")
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
@@ -94,13 +94,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-        @PutMapping("userDetails/{id}/{roomId}")
-        public ResponseEntity<Room> updateUser(@PathVariable("id") String id, @PathVariable String roomId){
-            User user = userService.getUserById(id);
-            Room room = roomService.getRoomById(roomId);
+    @PutMapping("userDetails/{id}/{roomId}")
+    public ResponseEntity<Room> updateUser(@PathVariable("id") String id, @PathVariable String roomId){
 
-            room.setUser(user);
-            roomService.updateRoom(room);
-            return new ResponseEntity<>(room, HttpStatus.OK);
+         User user = userService.getUserById(id);
+         Room room = roomService.getRoomById(roomId);
+
+         room.setUser(user);
+         roomService.updateRoom(room);
+         return new ResponseEntity<>(room, HttpStatus.OK);
         }
 }

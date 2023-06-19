@@ -56,8 +56,9 @@ public class SecurityConfiguration {
                     .authorizeHttpRequests()
                     .requestMatchers(AUTH_WHITELIST)
                     .permitAll()
-                    .requestMatchers("/companies/**").hasAnyRole(ADMIN.name()) // add many roles with ,
-                    .requestMatchers("/users/**").hasAnyRole(ADMIN.name())
+                    //.requestMatchers("/companies/**").hasAnyRole(ADMIN.name()) // add many roles with ,
+                    //.requestMatchers("/users/**").hasAnyRole(ADMIN.name())
+                    //.requestMatchers("/buildings/**").hasAnyRole(ADMIN.name())
                     .anyRequest()
                     .authenticated()
                     .and()
@@ -68,12 +69,5 @@ public class SecurityConfiguration {
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
     }
 }

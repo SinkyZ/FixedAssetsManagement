@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/companies")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 @SecurityRequirement(name = "bearerAuth")
 public class CompanyController {
    @Autowired

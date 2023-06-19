@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { Room } from '../models/room.model';
+import { UserAuthService } from '../auth/user-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,12 @@ export class UserService {
 
   private url = "users";
 
-  constructor(private httpClient: HttpClient) { }
+  private authUrl = "auth"
+
+  requestHeader = new HttpHeaders({ 'No-Auth': 'True' });
+
+  constructor(private httpClient: HttpClient,
+              private userAuthService: UserAuthService) { }
 
   public getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(`${environment.apiUrl}/${this.url}`);
@@ -39,6 +45,32 @@ export class UserService {
   }
 
   public assignRoomToAnUser(id: string, roomId: string): Observable<any>{
+    console.log(roomId);
     return this.httpClient.put<any>(`${environment.apiUrl}/${this.url}/userDetails/${id}/${roomId}`, null);
+  }
+
+  public login(loginData: any) {
+    return this.httpClient.post(`${environment.apiUrl}/${this.authUrl}/authenticate`, loginData, {
+      headers: this.requestHeader,
+    });
+  }
+
+  public roleMatch(allowedRoles: any): boolean{
+    let isMatch = false;
+    const userRole: any = this.userAuthService.getRole();
+
+    if(userRole != null && userRole)
+    {
+      for(let i = 0; i < allowedRoles.length; i++)
+      {
+        if(userRole == allowedRoles[i])
+        {
+          console.log(userRole);
+          isMatch = true;
+          return isMatch;
+        }
+      }
+    }
+    return isMatch;
   }
 }

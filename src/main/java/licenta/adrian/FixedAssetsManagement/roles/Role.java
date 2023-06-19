@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+//TODO: Add more roles and permissions
 @RequiredArgsConstructor
 public enum Role {
+    SECRETARY(Collections.emptySet()),
     USER(Collections.emptySet()),
-    HR(Collections.emptySet()),
     ADMIN(Set.of(
             Permission.ADMIN_READ,
             Permission.ADMIN_CREATE,

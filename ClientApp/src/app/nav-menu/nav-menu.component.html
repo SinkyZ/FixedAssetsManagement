@@ -21,9 +21,14 @@
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/users']">Users</a>
+            <a class="nav-link text-dark" [routerLink]="['/users']" *ngIf="userService.roleMatch(['ADMIN'])">Users</a>
           </li>
-
+          <li class="nav-item" *ngIf="! isLoggedIn()" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" (click)="logout()">Logout</a>
+          </li>
         </ul>
       </div>
     </div>

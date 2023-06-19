@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
 
@@ -21,6 +21,11 @@ import { RoomDetailsComponent } from './components/room/room-details/room-detail
 import { UserTableComponent } from './components/user/user-table/user-table/user-table.component';
 import { UserDetailsComponent } from './components/user/user-details/user-details/user-details.component';
 import { CompanyComponent } from './components/company/company/company.component';
+import { LoginComponent } from './login/login/login.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { UserService } from './services/user.service';
+import { ForbiddenComponent } from './forbidden/forbidden/forbidden.component';
 
 
 @NgModule({
@@ -35,6 +40,8 @@ import { CompanyComponent } from './components/company/company/company.component
     RoomDetailsComponent,
     UserTableComponent,
     UserDetailsComponent,
+    LoginComponent,
+    ForbiddenComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -54,12 +61,22 @@ import { CompanyComponent } from './components/company/company/company.component
       { path: 'companies/companyDetails/:companyId', component: CompanyDetailsComponent },
       { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent },
       { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent },
-      { path: 'users', component: UserTableComponent },
-      { path: 'users/userDetails/:userId/roomDetails/:roomId', component: RoomDetailsComponent },
-      { path: 'users/userDetails/:userId', component: UserDetailsComponent }
+      { path: 'users', component: UserTableComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+      { path: 'users/userDetails/:userId/roomDetails/:roomId', component: RoomDetailsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+      { path: 'users/userDetails/:userId', component: UserDetailsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+      { path: 'login', component: LoginComponent },
+      { path: 'forbidden', component: ForbiddenComponent }
     ])
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

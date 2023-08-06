@@ -3,7 +3,6 @@ package licenta.adrian.FixedAssetsManagement.services;
 import licenta.adrian.FixedAssetsManagement.exception.BuildingNotFoundException;
 import licenta.adrian.FixedAssetsManagement.model.Building;
 import licenta.adrian.FixedAssetsManagement.repository.IBuildingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ import java.util.UUID;
 public class BuildingService {
     private final IBuildingRepository buildingRepository;
 
-    @Autowired
     public BuildingService(IBuildingRepository buildingRepository) {
         this.buildingRepository = buildingRepository;
     }

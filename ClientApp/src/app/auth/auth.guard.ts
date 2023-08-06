@@ -24,7 +24,6 @@ export class AuthGuard implements CanActivate {
         if(match){
           return true;
         }else {
-          console.log(role);
           this.router.navigate(['/forbidden']);
           return false;
         }

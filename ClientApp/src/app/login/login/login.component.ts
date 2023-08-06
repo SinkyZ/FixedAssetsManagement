@@ -12,22 +12,22 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService,
-              private userAuthService: UserAuthService,
-              private router: Router) {}
+    private userAuthService: UserAuthService,
+    private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   login(loginForm: NgForm) {
     this.userService.login(loginForm.value).subscribe(
       (response: any) => {
         this.userAuthService.setRole(response.user.role),
-        this.userAuthService.setToken(response.jwtToken);
-
-        console.log(response);
+          this.userAuthService.setToken(response.jwtToken);
+        this.userAuthService.setId(response.user.id);
 
         this.router.navigate(['/'])
       },
       (error) => {
+        alert("Username or password is incorrect")
         console.log(error)
       }
     )

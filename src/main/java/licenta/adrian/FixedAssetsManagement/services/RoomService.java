@@ -4,7 +4,6 @@ import licenta.adrian.FixedAssetsManagement.exception.RoomNotFoundException;
 
 import licenta.adrian.FixedAssetsManagement.model.Room;
 import licenta.adrian.FixedAssetsManagement.repository.IRoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,6 @@ import java.util.UUID;
 public class RoomService {
     private final IRoomRepository roomRepository;
 
-    @Autowired
     public RoomService(IRoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }

@@ -6,16 +6,15 @@ import { Injectable } from "@angular/core";
 
 @Injectable({
     providedIn: 'root'
-  })
-export class AuthInterceptor implements HttpInterceptor{
+})
+export class AuthInterceptor implements HttpInterceptor {
     constructor(private userAuthService: UserAuthService,
-                private router: Router) {}
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
-        if(req.headers.get("No-Auth") === "True")
-        {
+        private router: Router) { }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (req.headers.get("No-Auth") === "True") {
             return next.handle(req.clone());
         }
-        const token  = this.userAuthService.getToken();
+        const token = this.userAuthService.getToken();
 
         req = this.addToken(req, token);
 
@@ -23,9 +22,9 @@ export class AuthInterceptor implements HttpInterceptor{
             catchError(
                 (error: HttpErrorResponse) => {
                     console.log(error.status);
-                    if(error.status === 401){
+                    if (error.status === 401) {
                         this.router.navigate(['/login'])
-                    } else if (error.status === 403){
+                    } else if (error.status === 403) {
                         this.router.navigate(['/forbidden'])
                     }
                     return throwError("Something is wrong");
@@ -34,11 +33,11 @@ export class AuthInterceptor implements HttpInterceptor{
         )
     }
 
-    private addToken(request:HttpRequest<any>, token:string | null){
+    private addToken(request: HttpRequest<any>, token: string | null) {
         return request.clone(
             {
                 setHeaders: {
-                    Authorization : `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             }
         );

@@ -26,6 +26,8 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { UserService } from './services/user.service';
 import { ForbiddenComponent } from './forbidden/forbidden/forbidden.component';
+import { DefaultRoles } from './auth/role-defines';
+import { LoggedUserDetailsComponent } from './components/user/logged-user-details/logged-user-details/logged-user-details.component';
 
 
 @NgModule({
@@ -42,6 +44,7 @@ import { ForbiddenComponent } from './forbidden/forbidden/forbidden.component';
     UserDetailsComponent,
     LoginComponent,
     ForbiddenComponent,
+    LoggedUserDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -57,15 +60,16 @@ import { ForbiddenComponent } from './forbidden/forbidden/forbidden.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'assets', component: AssetsComponent },
-      { path: 'companies', component: CompanyComponent },
-      { path: 'companies/companyDetails/:companyId', component: CompanyDetailsComponent },
-      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent },
-      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent },
-      { path: 'users', component: UserTableComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'users/userDetails/:userId/roomDetails/:roomId', component: RoomDetailsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'users/userDetails/:userId', component: UserDetailsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+      { path: 'companies', component: CompanyComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin] }  },
+      { path: 'companies/companyDetails/:companyId', component: CompanyDetailsComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin] } },
+      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId', component: BuildingDetailsComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin] } },
+      { path: 'companies/companyDetails/:companyId/buildingDetails/:buildingId/roomDetails/:roomId', component: RoomDetailsComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin] } },
+      { path: 'users', component: UserTableComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin] } },
+      { path: 'users/userDetails/:userId/roomDetails/:roomId', component: RoomDetailsComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin, DefaultRoles.User] } },
+      { path: 'users/userDetails/:userId', component: UserDetailsComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.Admin] } },
       { path: 'login', component: LoginComponent },
-      { path: 'forbidden', component: ForbiddenComponent }
+      { path: 'forbidden', component: ForbiddenComponent },
+      { path: 'profile', component: LoggedUserDetailsComponent, canActivate: [AuthGuard], data: { roles: [DefaultRoles.User] } }
     ])
   ],
   providers: [

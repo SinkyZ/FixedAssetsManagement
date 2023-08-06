@@ -1,11 +1,11 @@
-<!-- =====================================ADD PROJECT BUTTON=============================== -->
+<!-- =====================================ADD COMPANY BUTTON=============================== -->
 
 <div class="add-button-container">
-    <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help"
+    <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help my-3"
         [style]="{width: '150px', height: '40px'}" pButton pRipple label="Add Company" icon="pi pi-plus"></button>
 </div>
 
-<!-- =============================MODAL FOR ADDING A PROJECT================================= -->
+<!-- =============================MODAL FOR COMPANY A PROJECT================================= -->
 
 <p-dialog header="Add Company" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}"
     [draggable]="false" [resizable]="false">
@@ -31,7 +31,7 @@
         <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
         <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
         <p style="margin-top: 10px; text-align: center">
-            Do you realy want to delete this company? This process cannot be undone.
+            Do you really want to delete this company? This process cannot be undone.
         </p>
         <div style="
           display: flex;
@@ -66,23 +66,28 @@
 </p-dialog>
 
 <!-- ================================CARD================================= -->
-<div *ngIf="(companyList|async); let listOfCompanies;">
+<div *ngIf="(companyList|async); let listOfCompanies;" class="d-flex ml-2">
     <div *ngIf="listOfCompanies.length===0">
         <h3>There are currently no companies.</h3>
         <h3>You can add companies using the button on the top right corner.</h3>
     </div>
 
-    <div class="card-container" *ngFor="let company of listOfCompanies">
-        <p-card class="card-content" header={{company.name}} [style]="{width: '360px'}" styleClass="p-card-shadow">
-            <ng-template pTemplate="subtitle">
-            </ng-template>
-            <div class="card-buttons">
-                <div id="hover" div title="Edit Company" class="card-button pi pi-pencil"
-                    (click)="showEditDialog(company)"></div>
-                <div id="hover" div title="Delete Company" class="card-button pi pi-trash"
-                    (click)="showDeleteDialog(company)"></div>
-                <div id="hover" div title="Display Company" class="card-button pi pi-bars"
-                    routerLink="companyDetails/{{ this.company.id }}"></div>
-            </div>
-        </p-card>
+    <div class="row">
+        <div class="col-6" *ngFor="let company of listOfCompanies; let i = index">
+            <p-card class="card-content" header={{company.name}} [style]="{width: '360px'}" styleClass="p-card-shadow">
+                <ng-template pTemplate="subtitle">
+                </ng-template>
+                <div class="card-buttons d-flex justify-content-around align-items-center flex-row">
+                    <div id="hover" div title="Edit Company"
+                        class="card-button pi pi-pencil d-flex align-items-center justify-content-center"
+                        (click)="showEditDialog(company)"></div>
+                    <div id="hover" div title="Delete Company"
+                        class="card-button pi pi-trash d-flex align-items-center justify-content-center"
+                        (click)="showDeleteDialog(company)"></div>
+                    <div id="hover" div title="Display Company" class="card-button pi pi-bars"
+                        routerLink="companyDetails/{{ this.company.id }}"></div>
+                </div>
+            </p-card>
+        </div>
     </div>
+</div>

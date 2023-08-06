@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Asset } from 'src/app/models/asset.model';
 import { AssetsService } from 'src/app/services/assets.service';
 
@@ -10,9 +10,9 @@ import { AssetsService } from 'src/app/services/assets.service';
 })
 export class AssetsComponent implements OnInit {
 
-  assetList!: Asset[];
+  assetList!: Observable<Asset[]>;
   assetIdToDelete: any;
-  assetId : any;
+  assetId: any;
   displayAddAssetModal: boolean = false;
   displayDeleteAssetModal: boolean = false;
   displayEditModal: boolean = false;
@@ -22,11 +22,11 @@ export class AssetsComponent implements OnInit {
     this.refreshAssetList();
   }
 
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
+
   refreshAssetList() {
-    this.assetsService.getAllAssets().subscribe({
-      next: (asset) => {
-        this.assetList = asset;
-      }
-    })
+    this.assetList = this.assetsService.getAllAssets();
   }
 }

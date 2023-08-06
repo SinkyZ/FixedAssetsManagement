@@ -4,7 +4,6 @@ import licenta.adrian.FixedAssetsManagement.exception.AssetNotFoundException;
 import licenta.adrian.FixedAssetsManagement.model.Asset;
 import licenta.adrian.FixedAssetsManagement.repository.IAssetRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,6 @@ import java.util.UUID;
 public class AssetService {
     private final IAssetRepository assetsRepository;
 
-    @Autowired
     public AssetService(IAssetRepository assetsRepository){
         this.assetsRepository = assetsRepository;
     }

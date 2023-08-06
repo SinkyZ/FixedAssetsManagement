@@ -65,5 +65,4 @@ public final class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
 }

@@ -34,11 +34,14 @@ public class AssetController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Asset> getAssetById(@PathVariable("id") String id){
         Asset asset = assetService.getAssetById(id);
         return new ResponseEntity<>(asset, HttpStatus.OK );
     }
+
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Asset> addAsset(@RequestBody AssetDTO assetDTO){
         Asset newAsset = new Asset();
         newAsset.setName(assetDTO.getName());
@@ -48,7 +51,9 @@ public class AssetController {
         assetService.addAsset(newAsset);
         return new ResponseEntity<>(newAsset, HttpStatus.CREATED);
     }
+
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Asset> updateAsset(@PathVariable("id") String id, @RequestBody Asset asset){
         Asset assetToUpdate = assetService.getAssetById(id);
         assetToUpdate.setName(asset.getName());
@@ -59,6 +64,7 @@ public class AssetController {
     }
 
     @PutMapping("/status/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Asset> updateStatus(@PathVariable("id") String id, @RequestBody Asset asset){
         Asset assetToUpdate = assetService.getAssetById(id);
         if(asset.getIsWorking() != null)
@@ -72,6 +78,7 @@ public class AssetController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> deleteAsset(@PathVariable("id") String id){
         assetService.deleteAsset(id);
         return new ResponseEntity<>(HttpStatus.OK);

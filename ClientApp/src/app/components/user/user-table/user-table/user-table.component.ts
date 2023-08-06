@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { DefaultRoles } from 'src/app/auth/role-defines';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,12 +21,14 @@ export class UserTableComponent {
   userList!: Observable<User[]>;
   userIdToDelete: any;
   userId: any;
+  roles = DefaultRoles.AllRoles;
 
   ngOnInit(): void {
     this.refreshUserList();
   }
 
   addUserForm = new FormGroup({
+    passwordControl: new FormControl('', [Validators.required]),
     emailControl: new FormControl('', [Validators.required]),
     firstNameControl: new FormControl('', [Validators.required]),
     lastNameControl: new FormControl('', [Validators.required]),
@@ -50,6 +53,7 @@ export class UserTableComponent {
     newUser.firstName = this.addUserForm.controls.firstNameControl.value!
     newUser.lastName = this.addUserForm.controls.lastNameControl.value!
     newUser.email = this.addUserForm.controls.emailControl.value!
+    newUser.password = this.addUserForm.controls.passwordControl.value!
     newUser.phone = this.addUserForm.controls.phoneControl.value!
     newUser.role = this.addUserForm.controls.roleControl.value!
 
@@ -86,7 +90,6 @@ export class UserTableComponent {
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog() {
-    //this.getTLs();
     this.displayAddModal = true;
   }
 

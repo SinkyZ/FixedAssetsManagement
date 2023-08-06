@@ -9,7 +9,6 @@ import licenta.adrian.FixedAssetsManagement.services.BuildingService;
 import licenta.adrian.FixedAssetsManagement.services.CompanyService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,8 +21,6 @@ import java.util.List;
 @PreAuthorize("hasRole('ADMIN')")
 @SecurityRequirement(name = "bearerAuth")
 public class BuildingController {
-
-    @Autowired
     private final BuildingService buildingService;
     private final CompanyService companyService;
     private final RoomService roomService;

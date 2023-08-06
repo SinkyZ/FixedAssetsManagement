@@ -23,23 +23,31 @@
             <div class="col-12">
               <div class="container">
                 <div class="row">
-                  <div class>
-                    <div>
-                      <i class="pi pi-book" style="font-size: 6rem"></i>
-                    </div>
-                    <div style>
-                      <div><b>Number: </b>{{ room.number }}</div>
-                      <div class="col">
+
+                  <div class="col-2 d-flex align-items-center justify-content-center">
+                    <i class="pi pi-book cursor-pointer" role="button" style="font-size: 6rem"
+                      routerLink="roomDetails/{{ this.room.id }}"></i>
+                  </div>
+                  <div class="col-10 my-2">
+                    <div class="ml-4"><b>Number: </b>{{ room.number }}</div>
+                    <div class="col-8 p-4 ">
+
+                      <button type="button" class="btn btn-warning " (click)="showEditDialog(room)">
+                        Edit
                         <div id="hover" div class="pi pi-pencil"
-                          style="font-size: 1,5rem; cursor: pointer; margin-left: 50px" (click)="showEditDialog(room)">
+                          style="font-size: 1,5rem; cursor: pointer; margin-left: 50px">
                         </div>
-                        <div id="hover" div class="pi pi-trash"
-                          style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
-                          (click)="showDeleteDialog(room)"></div>
-                        <div id="hover" div title="Display Building" class="card-button pi pi-bars"
-                          style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
-                          routerLink="roomDetails/{{ this.room.id }}"></div>
-                      </div>
+                      </button>
+                      <button type="button" class="btn btn-danger ml-2" (click)="showDeleteDialog(room)">
+                        Delete <div id="hover" div class="pi pi-trash"
+                          style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"></div>
+                      </button>
+
+                      <button type="button" class="btn btn-primary ml-2" routerLink="roomDetails/{{ this.room.id }}">
+                        View Details <div id="hover" div title="Display Building" class="card-button pi pi-bars"
+                          style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"></div>
+                      </button>
+
                     </div>
                   </div>
                 </div>
@@ -61,7 +69,7 @@
     <br />
     <input placeholder="Room's Number" id="float-input" type="text" pInputText formControlName="numberControl"
       [style]="{width: '100%'}" />
-    <br />  
+    <br />
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="submit" label="Close" (click)="hideAddDialog()"
@@ -74,7 +82,7 @@
 
 <!-- =============================MODAL FOR EDITING A ROOM================================= -->
 
-<p-dialog header="Edit Building" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
+<p-dialog header="Edit Room" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
   [draggable]="false" [resizable]="false">
   <form [formGroup]="editRoomForm">
     <label for="float-input">Number</label>
@@ -97,7 +105,7 @@
     <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
     <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
     <p style="margin-top: 10px; text-align: center">
-      Do you realy want to delete this building? This process cannot be undone.
+      Do you really want to delete this room? This process cannot be undone.
     </p>
     <div style="
           display: flex;

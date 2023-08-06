@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserAuthService } from '../auth/user-auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { DefaultRoles } from '../auth/role-defines';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,6 +11,7 @@ import { UserService } from '../services/user.service';
 })
 export class NavMenuComponent {
   isExpanded = false;
+
 
   collapse() {
     this.isExpanded = false;
@@ -20,8 +22,20 @@ export class NavMenuComponent {
   }
 
   constructor(private userAuthService: UserAuthService,
-              public userService: UserService,
-              private router: Router) {}
+    public userService: UserService,
+    private router: Router) { }
+
+  public getAdminValue() {
+    return DefaultRoles.Admin;
+  }
+
+  public getUserValue() {
+    return DefaultRoles.User;
+  }
+
+  public getAllRoles() {
+    return DefaultRoles.AllRoles;
+  }
 
   public isLoggedIn() {
     return this.userAuthService.isLoggedIn();

@@ -18,7 +18,7 @@ export class UserService {
   requestHeader = new HttpHeaders({ 'No-Auth': 'True' });
 
   constructor(private httpClient: HttpClient,
-              private userAuthService: UserAuthService) { }
+    private userAuthService: UserAuthService) { }
 
   public getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(`${environment.apiUrl}/${this.url}`);
@@ -30,6 +30,10 @@ export class UserService {
 
   public getUserById(id: string): Observable<User> {
     return this.httpClient.get<User>(`${environment.apiUrl}/${this.url}/${id}`);
+  }
+
+  public getUserByEmail(email: string): Observable<User> {
+    return this.httpClient.get<User>(`${environment.apiUrl}/${this.url}/${email}`);
   }
 
   public addUser(user: User): Observable<User> {
@@ -44,7 +48,7 @@ export class UserService {
     return this.httpClient.put<User>(`${environment.apiUrl}/${this.url}/${id}`, user);
   }
 
-  public assignRoomToAnUser(id: string, roomId: string): Observable<any>{
+  public assignRoomToAnUser(id: string, roomId: string): Observable<any> {
     console.log(roomId);
     return this.httpClient.put<any>(`${environment.apiUrl}/${this.url}/userDetails/${id}/${roomId}`, null);
   }
@@ -55,17 +59,13 @@ export class UserService {
     });
   }
 
-  public roleMatch(allowedRoles: any): boolean{
+  public roleMatch(allowedRoles: any): boolean {
     let isMatch = false;
     const userRole: any = this.userAuthService.getRole();
 
-    if(userRole != null && userRole)
-    {
-      for(let i = 0; i < allowedRoles.length; i++)
-      {
-        if(userRole == allowedRoles[i])
-        {
-          console.log(userRole);
+    if (userRole != null && userRole) {
+      for (let i = 0; i < allowedRoles.length; i++) {
+        if (userRole === allowedRoles[i]) {
           isMatch = true;
           return isMatch;
         }

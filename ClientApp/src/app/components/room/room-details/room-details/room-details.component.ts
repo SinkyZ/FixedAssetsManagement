@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DefaultCategories } from 'src/app/components/assets/category/category/category-defines';
 import { Asset } from 'src/app/models/asset.model';
-import { Category } from 'src/app/models/category.model';
 import { AssetsService } from 'src/app/services/assets.service';
 import { RoomService } from 'src/app/services/room.service';
 

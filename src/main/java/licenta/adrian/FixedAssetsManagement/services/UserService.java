@@ -3,11 +3,11 @@ package licenta.adrian.FixedAssetsManagement.services;
 import licenta.adrian.FixedAssetsManagement.exception.UserNotFoundException;
 import licenta.adrian.FixedAssetsManagement.model.User;
 import licenta.adrian.FixedAssetsManagement.repository.IUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -16,7 +16,6 @@ public class UserService {
 
     private final IUserRepository userRepository;
 
-    @Autowired
     public UserService(IUserRepository userRepository)
     {
         this.userRepository = userRepository;
@@ -40,7 +39,11 @@ public class UserService {
 
     public User getUserByEmail(String email){
         return userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User by id" + email + "not found"));
+                .orElseThrow(() -> new UserNotFoundException("User by email" + email + "not found"));
+    }
+
+    public Optional<User> checkMail(String email){
+        return userRepository.findUserByEmail(email);
     }
 
     public void deleteUser(String id){

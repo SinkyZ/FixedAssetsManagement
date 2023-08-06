@@ -3,7 +3,6 @@ package licenta.adrian.FixedAssetsManagement.services;
 import licenta.adrian.FixedAssetsManagement.exception.CompanyNotFoundException;
 import licenta.adrian.FixedAssetsManagement.model.Company;
 import licenta.adrian.FixedAssetsManagement.repository.ICompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,6 @@ public class CompanyService {
 
     private final ICompanyRepository companyRepository;
 
-    @Autowired
     public CompanyService(ICompanyRepository companyRepository)
     {
         this.companyRepository = companyRepository;

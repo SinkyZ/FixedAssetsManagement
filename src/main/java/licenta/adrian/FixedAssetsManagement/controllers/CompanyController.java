@@ -8,7 +8,6 @@ import licenta.adrian.FixedAssetsManagement.model.Company;
 import licenta.adrian.FixedAssetsManagement.services.BuildingService;
 import licenta.adrian.FixedAssetsManagement.services.CompanyService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,10 +17,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/companies")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+@PreAuthorize("hasRole('ADMIN')")
 @SecurityRequirement(name = "bearerAuth")
 public class CompanyController {
-   @Autowired
    private final CompanyService companyService;
    private final BuildingService buildingService;
 

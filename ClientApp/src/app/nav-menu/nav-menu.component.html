@@ -13,20 +13,26 @@
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/assets']">Assets</a>
+            <a class="nav-link text-dark" [routerLink]="['/assets']" *ngIf="userService.roleMatch([getAdminValue()])">Assets</a>
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/companies']">Companies</a>
+            <a class="nav-link text-dark" [routerLink]="['/companies']" *ngIf="userService.roleMatch([getAdminValue()])">Companies</a>
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/users']" *ngIf="userService.roleMatch(['ADMIN'])">Users</a>
+            <a class="nav-link text-dark" [routerLink]="['/users']" *ngIf="userService.roleMatch([getAdminValue()])">Users</a>
           </li>
-          <li class="nav-item" *ngIf="! isLoggedIn()" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+          <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/profile']"
+              *ngIf="userService.roleMatch([getUserValue()])">Profile</a>
+          </li>
+          <li class="nav-item" *ngIf="! isLoggedIn()" [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
           </li>
-          <li class="nav-item" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+          <li class="nav-item" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" (click)="logout()">Logout</a>
           </li>
         </ul>

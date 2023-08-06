@@ -1,0 +1,38 @@
+<!-- ===========================DATAVIEW WITH ASSETS====================== -->
+<div id="ua" style="display: flex; flex-direction: column; width: 100%">
+  <div id="b">
+    <div class="card">
+      <div *ngIf="assetList | async; let asset">
+        <p-dataView #dv [value]="asset" [paginator]="true" [rows]="3" filterBy="name" layout="list">
+          <ng-template pTemplate="header">
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+              <span class="p-input-icon-left mb-2 md:mb-0">
+                <input type="search" pInputText placeholder="Search by Name"
+                  (input)="dv.filter(getEventValue($event))" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template let-asset pTemplate="listItem">
+            <div class="col-12">
+              <div class="container">
+                <div class="row">
+                  <div class="col-4 d-flex align-items-center justify-content-center">
+                    <i class="pi pi-paperclip" style="font-size: 6rem"></i>
+                  </div>
+                  <div class="col-8">
+                    <div><b>Name: </b>{{ asset.name }}</div>
+                    <div><b>Description: </b>{{ asset.description }}</div>
+                    <div><b>isWorking: </b>{{ asset.isWorking }}</div>
+                    <div><b>Category: </b>{{ asset.category }}</div>
+                    <div class="col p-2 d-flex ">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataView>
+      </div>
+    </div>
+  </div>
+</div>

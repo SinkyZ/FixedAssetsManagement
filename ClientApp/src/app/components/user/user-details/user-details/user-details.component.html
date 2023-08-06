@@ -1,10 +1,10 @@
-<!-- =====================================ADD ROOM BUTTON=============================== -->
+<!-- =====================================ASSIGN A ROOM BUTTON=============================== -->
 
 <div class="add-button-container">
-    <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help"
-      [style]="{width: '150px', height: '40px'}" pButton pRipple label="Assign a room" icon="pi pi-plus"></button>
-  </div>
-  
+  <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help my-3"
+    [style]="{width: '150px', height: '50px'}" pButton pRipple label="Assign a room" icon="pi pi-plus"> </button>
+</div>
+
 
 <div style="
       width: 100%;
@@ -12,82 +12,86 @@
       flex-direction: column;
       align-items: center;
     ">
-    <div *ngIf="user" style="margin: 50px; width: 90%">
-      <p-card header="{{ user.firstName}} {{user.lastName}}">
-        <div style="background-color: #f7f7f7; margin-bottom: 10px">
-          <b>Role: </b> {{ user.role }}
-        </div>
-        <div style="background-color: #f7f7f7; margin-bottom: 10px">
-          <b>Email:</b> {{ user.email }}
-        </div>
-        <div style="background-color: #f7f7f7; margin-bottom: 10px">
-          <b>Phone:</b> {{ user.phone }}
-        </div>
-      </p-card>
-    </div>
-    <!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
-    <div id="ua" style="display: flex; flex-direction: column; width: 90%">
-      <div id="b">
-        <div class="card">
-          <div *ngIf="roomListObs | async; let room">
-            <p-dataView #dv [value]="room" [paginator]="true" [rows]="2" filterBy="number" layout="list">
-              <ng-template pTemplate="header">
-                <div class="flex flex-column md:flex-row md:justify-content-between">
-                  <span class="p-input-icon-left mb-2 md:mb-0">
-                    <input type="search" pInputText placeholder="Search by Number"
-                      (input)="dv.filter(getEventValue($event))" />
-                  </span>
-                </div>
-              </ng-template>
-              <ng-template let-room pTemplate="listItem">
-                <div class="col-12">
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-10" style="
+  <div *ngIf="user" style="margin: 50px; width: 90%">
+    <p-card class="text-center" header="{{ user.firstName}} {{user.lastName}}">
+      <div style="background-color: #f7f7f7; margin-bottom: 10px" class="w-50 mx-auto">
+        <b>Role: </b> {{ user.role }}
+      </div>
+      <div style="background-color: #f7f7f7; margin-bottom: 10px" class="w-50 mx-auto">
+        <b>Email:</b> {{ user.email }}
+      </div>
+      <div style="background-color: #f7f7f7; margin-bottom: 10px" class="w-50 mx-auto">
+        <b>Phone:</b> {{ user.phone }}
+      </div>
+    </p-card>
+  </div>
+</div>
+<!-- ===========================DATAVIEW WITH USER DETAILS====================== -->
+<div id="ua" style="display: flex; flex-direction: column; width: 90%" class="mx-auto">
+  <div id="b">
+    <div class="card">
+      <div *ngIf="roomListObs | async; let room">
+        <p-dataView #dv [value]="room" [paginator]="true" [rows]="2" filterBy="number" layout="list">
+          <ng-template pTemplate="header">
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+              <span class="p-input-icon-left mb-2 md:mb-0">
+                <input type="search" pInputText placeholder="Search by Number"
+                  (input)="dv.filter(getEventValue($event))" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template let-room pTemplate="listItem">
+            <div class="col-12">
+              <div class="container">
+                <div class="row">
+                  <div class="col-10" style="
                           display: flex;
                           padding-top: 20px;
                           padding-bottom: 20px;
                           cursor: pointer;
                         ">
-                        <div>
-                          <i class="pi pi-book" style="font-size: 6rem"></i>
-                        </div>
-                        <div style="
+                    <div>
+                      <i class="pi pi-book" style="font-size: 6rem" routerLink="roomDetails/{{ this.room.id }}"></i>
+                    </div>
+                    <div style="
                             display: flex;
                             flex-direction: column;
                             margin-left: 30px;
                           ">
-                          <div><b>Number: </b>{{ room.number }}</div>
-                          <div id="hover" div title="Display Room" class="card-button pi pi-bars"
-                          style="font-size: 1,5rem; cursor: pointer; margin-left: 10px"
-                          routerLink="roomDetails/{{ this.room.id }}"></div>
-                        </div>
-                      </div>
+                      <div><b>Number: </b>{{ room.number }}</div>
+                      <button type="button" routerLink="roomDetails/{{ this.room.id }}"
+                        class="btn btn-primary d-flex align-items-center justify-content-center ml-2 mt-4 ">
+                        View Details
+                        <div id="hover" div title="Display Room" class="card-button pi pi-bars"
+                          style="font-size: 1,5rem; cursor: pointer; margin-left: 10px"></div>
+                      </button>
                     </div>
                   </div>
                 </div>
-              </ng-template>
-            </p-dataView>
-          </div>
-        </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataView>
       </div>
     </div>
   </div>
-
-  <!-- =============================MODAL FOR ADDING A ROOM================================= -->
-<p-dialog header="Assign a room" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}" [draggable]="false"
-[resizable]="false">
-<form [formGroup]="assignRoomToUserGroup">
-  <label for="float-input">Rooms</label>
-  <br />
-  <p-dropdown [options]="allRoomList" optionLabel="number" optionValue="id" formControlName="roomControl" (onChange)="onRoomChange($event)" autoWidth="false" [style]="{'width':'100%'}">
-</p-dropdown>
-  <br />  
-</form>
-<div class="buttons-container">
-  <button pButton pRipple type="submit" label="Close" (click)="hideAddDialog()"
-    class="modal-button btn-pos p-button-danger"></button>
-  <button pButton pRipple type="submit" label="Submit" (click)="assignRoomToUser()" [disabled]="!assignRoomToUserGroup.valid"
-    class="modal-button btn-pos p-button-success"></button>
 </div>
+
+<!-- =============================MODAL FOR ADDING A ROOM================================= -->
+<p-dialog header="Assign a room" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px',height:'400px'}"
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="assignRoomToUserGroup">
+    <label for="float-input">Rooms</label>
+    <br />
+    <p-dropdown [options]="allRoomList" optionLabel="number" optionValue="id" formControlName="roomControl"
+      (onChange)="onRoomChange($event)" autoWidth="false" [style]="{'width':'100%'}">
+    </p-dropdown>
+    <br />
+  </form>
+  <div class="buttons-container mt-5 d-flex align-items-center justify-content-center">
+    <button pButton pRipple type="submit" label="Close" (click)="hideAddDialog()"
+      class="modal-button btn-pos p-button-danger mr-3"></button>
+    <button pButton pRipple type="submit" label="Submit" (click)="assignRoomToUser()"
+      [disabled]="!assignRoomToUserGroup.valid" class="modal-button btn-pos p-button-success ml-3"></button>
+  </div>
 </p-dialog>

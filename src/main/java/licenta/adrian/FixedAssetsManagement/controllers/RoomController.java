@@ -9,7 +9,6 @@ import licenta.adrian.FixedAssetsManagement.services.AssetService;
 import licenta.adrian.FixedAssetsManagement.services.BuildingService;
 import licenta.adrian.FixedAssetsManagement.services.RoomService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +22,6 @@ import java.util.List;
 @SecurityRequirement(name = "bearerAuth")
 public class RoomController {
 
-    @Autowired
     private final BuildingService buildingService;
     private final RoomService roomService;
     private final AssetService assetService;
@@ -35,12 +33,14 @@ public class RoomController {
     }
 
     @GetMapping
+    @PreAuthorize(("hasAnyRole('ADMIN', 'USER')"))
     public ResponseEntity<List<Room>> getAllRooms(){
         List<Room> allRooms = roomService.getAllRooms();
         return new ResponseEntity<>(allRooms, HttpStatus.OK);
     }
 
     @GetMapping("room/{roomId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<Asset>> getAssetsByRoomId(@PathVariable("roomId") String roomId) {
         List<Asset> allAssetsByRoomId = assetService.getAssetsByRoomId(roomId);
         return new ResponseEntity<>(allAssetsByRoomId, HttpStatus.OK);

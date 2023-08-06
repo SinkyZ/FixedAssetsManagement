@@ -1,11 +1,11 @@
-<!-- =====================================ADD ROOM BUTTON=============================== -->
+<!-- =====================================ADD ASSET BUTTON=============================== -->
 
 <div class="add-button-container">
-  <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help"
+  <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help my-3"
     [style]="{width: '150px', height: '40px'}" pButton pRipple label="Add Asset" icon="pi pi-plus"></button>
 </div>
 
-<!-- ===========================DATAVIEW WITH ROOMS====================== -->
+<!-- ===========================DATAVIEW WITH ASSETS====================== -->
 <div id="ua" style="display: flex; flex-direction: column; width: 100%">
   <div id="b">
     <div class="card">
@@ -23,37 +23,43 @@
             <div class="col-12">
               <div class="container">
                 <div class="row">
-                  <div class>
-                    <div>
-                      <i class="pi pi-book" style="font-size: 6rem"></i>
+                  <div class="col-4 d-flex align-items-center justify-content-center">
+                    <i class="pi pi-paperclip" style="font-size: 6rem"></i>
+                  </div>
+                  <div class="col-8">
+                    <div><b>Name: </b>{{ asset.name }}</div>
+                    <div><b>Description: </b>{{ asset.description }}</div>
+                    <div><b>isWorking: </b>{{ asset.isWorking }}</div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="{{asset.id}}" id="{{asset.id}}" value="false"
+                        [checked]="asset.isWorking==='false'" (change)="onCriteriaChange($event, asset)">
+                      <label class="form-check-label d-flex d-lg-none" for="{{asset.id}}_false">
+                        False
+                      </label>
                     </div>
-                    <div style>
-                      <div><b>Name: </b>{{ asset.name }}</div>
-                      <div><b>Description: </b>{{ asset.description }}</div>
-                      <div><b>isWorking: </b>{{ asset.isWorking }}</div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="{{asset.id}}" id="{{asset.id}}"
-                          value="false" [checked]="asset.isWorking==='false'" (change)="onCriteriaChange($event, asset)">
-                        <label class="form-check-label d-flex d-lg-none" for="{{asset.id}}_false">
-                          False
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="{{asset.id}}" id="{{asset.id}}"
-                          value="true" [checked]="asset.isWorking==='true'" (change)="onCriteriaChange($event, asset)">
-                        <label class="form-check-label d-flex d-lg-none" for="{{asset.id}}_true">
-                          True
-                        </label>
-                      </div>
-                      <div><b>Category: </b>{{ asset.category }}</div>
-                      <div class="col">
-                        <div id="hover" div class="pi pi-pencil"
-                          style="font-size: 1,5rem; cursor: pointer; margin-left: 50px" (click)="showEditDialog(asset)">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="{{asset.id}}" id="{{asset.id}}" value="true"
+                        [checked]="asset.isWorking==='true'" (change)="onCriteriaChange($event, asset)">
+                      <label class="form-check-label d-flex d-lg-none" for="{{asset.id}}_true">
+                        True
+                      </label>
+                    </div>
+                    <div><b>Category: </b>{{ asset.category }}</div>
+                    <div class="col p-2 d-flex ">
+                      <button type="button" (click)="showEditDialog(asset)"
+                        class="btn btn-warning d-flex align-items-center justify-content-center">
+                        Edit
+                        <div id="hover" class="pi pi-pencil"
+                          style="font-size: 1,5rem; cursor: pointer; margin-left: 50px">
                         </div>
-                        <div id="hover" div class="pi pi-trash"
-                          style="font-size: 1,5rem; cursor: pointer; margin-left: 30px"
-                          (click)="showDeleteDialog(asset)"></div>
-                      </div>
+                      </button>
+                      <button type="button" (click)="showDeleteDialog(asset)"
+                        class="btn btn-secondary d-flex align-items-center justify-content-center ml-2 btn-danger ">
+                        Delete
+                        <div id="hover" class="pi pi-trash"
+                          style="font-size: 1,5rem; cursor: pointer; margin-left: 30px">
+                        </div>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -66,7 +72,7 @@
   </div>
 </div>
 
-<!-- =============================MODAL FOR ADDING A ROOM================================= -->
+<!-- =============================MODAL FOR ADDING AN ASSET================================= -->
 
 <p-dialog header="Asset Room" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}"
   [draggable]="false" [resizable]="false">
@@ -76,18 +82,18 @@
     <input placeholder="Asset's Name" id="float-input" type="text" pInputText formControlName="nameControl"
       [style]="{width: '100%'}" />
     <br />
-    <label for="float-input">Description</label>
-    <br />
-    <input placeholder="Asset's Descripiton" id="float-input" type="text" pInputText
-      formControlName="descriptionControl" [style]="{width: '100%'}" />
-    <br />
     <label for="float-input">Category</label>
     <br />
     <p-dropdown [options]="categories" formControlName="categoryControl" autoWidth="false" [style]="{'width':'100%'}">
     </p-dropdown>
     <br />
+    <label for="float-input">Description</label>
+    <br />
+    <input placeholder="Asset's Descripiton" id="float-input" type="text" pInputText
+      formControlName="descriptionControl" [style]="{width: '100%'}" />
+    <br />
   </form>
-  <div class="buttons-container">
+  <div class="buttons-container  mt-5 d-flex justify-content-around">
     <button pButton pRipple type="submit" label="Close" (click)="hideAddDialog()"
       class="modal-button btn-pos p-button-danger"></button>
 
@@ -96,28 +102,28 @@
   </div>
 </p-dialog>
 
-<!-- =============================MODAL FOR EDITING A ROOM================================= -->
+<!-- =============================MODAL FOR EDITING AN ASSET================================= -->
 
-<p-dialog header="Edit Building" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}"
-  [draggable]="false" [resizable]="false">
+<p-dialog header="Edit Asset" class="overflow-visible" [(visible)]="displayEditModal" [modal]="true"
+  [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <form [formGroup]="editAssetForm">
     <label for="float-input">Name</label>
     <br />
     <input placeholder="nameControl" id="float-input" type="text" pInputText formControlName="nameControl"
       [style]="{width: '100%'}" />
     <br />
-    <label for="float-input">Description</label>
-    <br />
-    <input placeholder="descriptionControl" id="float-input" type="text" pInputText
-      formControlName="descriptionControl" [style]="{width: '100%'}" />
-    <br />
     <label for="float-input">Category</label>
-    <br />
     <p-dropdown [options]="categories" formControlName="categoryControl" autoWidth="false" [style]="{'width':'100%'}">
     </p-dropdown>
     <br />
+    <!-- <br /> -->
+    <label for="float-input">Description</label>
+    <br />
+    <input placeholder="descriptionControl" id="float-input" type="text" pInputText formControlName="descriptionControl"
+      [style]="{width: '100%'}" />
+    <br />
   </form>
-  <div class="buttons-container">
+  <div class="buttons-container mt-5 d-flex justify-content-around">
     <button pButton pRipple type="button" label="Close" (click)="hideEditDialog()"
       class="modal-button btn-pos p-button-danger"></button>
     <button pButton pRipple type="submit" label="Submit" (click)="updateAsset()" [disabled]="!editAssetForm.valid"
@@ -125,13 +131,14 @@
   </div>
 </p-dialog>
 
+
 <!---------------------- DELETE MODAL ------------------------>
 <p-dialog [(visible)]="displayDeleteModal" styleClass="asset-dialog" [modal]="true">
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
     <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
     <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
     <p style="margin-top: 10px; text-align: center">
-      Do you realy want to delete this building? This process cannot be undone.
+      Do you really want to delete this asset? This process cannot be undone.
     </p>
     <div style="
           display: flex;
